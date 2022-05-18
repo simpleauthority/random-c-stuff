@@ -1,4 +1,5 @@
 #include "linked_list.h"
+#include <stdio.h>
 
 static list_node* make_node() {
     // allocate enough space for a list_node
@@ -168,6 +169,7 @@ int ll_size(list_node* root) {
 
     list_node* cursor = root;
     while (cursor->next) {
+        cursor = cursor->next;
         count++;
     }
 
