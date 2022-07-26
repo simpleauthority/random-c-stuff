@@ -3,7 +3,7 @@
 
 void print_list(list_node* root) {
     printf("=== Printing List ===\n");
-    if (!root) {
+    if (ll_size(root) == 0) {
         printf("\tThere are no elements.\n");
         return;
     }
@@ -27,30 +27,28 @@ void print(list_node* root) {
 }
 
 int main(void) {
-    list_node* root = malloc(sizeof(list_node));
+    list_node* root = calloc(1, sizeof(list_node));
     root->value = "Hello";
     print(root);
 
     ll_push(root, "World!");
-    print(root);
-
     ll_push(root, "My");
-    print(root);
     ll_push(root, "name");
-    print(root);
     ll_push(root, "is");
-    print(root);
     ll_push(root, "Jacob");
     print(root);
 
     printf("Now replace name...Popping!\n");
     char* popped = ll_pop(root);
     printf("Popped value: %s\n", popped);
-    print(root);
+    printf("Pushing value...\n");
     ll_push(root, "Haxor");
     print(root);
 
-    printf("Clearing LinkedList...");
+    printf("Clearing LinkedList...\n");
     ll_clear(root);
+    root = NULL;
+    
+    printf("LinkedList is cleared. Now trying to print...\n");
     print(root);
 }

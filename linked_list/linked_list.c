@@ -3,7 +3,7 @@
 
 static list_node* make_node() {
     // allocate enough space for a list_node
-    return malloc(sizeof(list_node));
+    return calloc(1, sizeof(list_node));
 }
 
 static bool is_valid_root(list_node* root) {
@@ -167,20 +167,22 @@ void* ll_pop(list_node* root) {
 int ll_size(list_node* root) {
     int count = 0;
 
+    if (!is_valid_root(root)) return count;
+
     list_node* cursor = root;
     while (cursor->next) {
         cursor = cursor->next;
         count++;
     }
 
-    return count + 1;
+    return count;
 }
 
 bool ll_clear(list_node* root) {
     if (!is_valid_root(root)) return false;
 
     list_node* cursor = root;
-    while (cursor->next) {
+    while (true) {
         list_node* next = cursor->next;
 
         cursor->next = NULL;
@@ -189,7 +191,11 @@ bool ll_clear(list_node* root) {
         }
 
         free(cursor);
+
         cursor = next;
+        if (!cursor) {
+            break;
+        }
     }
 
     return true;
