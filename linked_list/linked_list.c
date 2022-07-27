@@ -9,7 +9,7 @@ static list_node* make_node() {
 static bool is_valid_root(list_node* root) {
     // a root is valid if it is not a null pointer
     // and it has no previous node
-    return root && !root->prev;
+    return root && !root->prev && root->value;
 }
 
 bool ll_unshift(list_node** root, void* value) {
@@ -169,6 +169,8 @@ int ll_size(list_node* root) {
 
     if (!is_valid_root(root)) return count;
 
+    count++; // Since it is a valid root, there is at one element (the root).
+
     list_node* cursor = root;
     while (cursor->next) {
         cursor = cursor->next;
@@ -188,6 +190,10 @@ bool ll_clear(list_node* root) {
         cursor->next = NULL;
         if (cursor->prev) {
             cursor->prev = NULL;
+        }
+
+        if (cursor->value) {
+            free(cursor->value);
         }
 
         free(cursor);
